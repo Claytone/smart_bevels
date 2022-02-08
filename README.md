@@ -7,6 +7,7 @@ Bevel workflow tool for Blender.
 3. Choose the `smart_bevels.py` file
 
 ### Usage
+![Demonstration](_movie.gif)
 1. Open the sidebar (N menu) and go to the S. Bevels tab.
 2. If it is your first time using smart bevels on this project, you will need to click the initialize button.
 3. Choose objects to add Smart Bevel modifiers to.
