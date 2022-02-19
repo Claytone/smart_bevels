@@ -31,6 +31,7 @@ class Smart_Bevel_PT_panel(bpy.types.Panel):
             layout.operator('smartbevels.init', text='Init Smart Bevels')
         else:
             layout.operator('object.addsmartbevel', text='Add SB to Selected Objs')
+            layout.operator('object.removesmartbevels', text='Remove SBs from Selected')
             layout.label(text='Settings')
             layout.prop(bpy.context.scene, 'sb_amt', text='Amount')
             layout.prop(bpy.context.scene, 'sb_seg', text='Segments')
@@ -84,10 +85,24 @@ class AddSmartBevel(Operator):
         return {'FINISHED'}
 
 
+class RemoveSmartBevels(Operator):
+    bl_idname = "object.removesmartbevels"
+    bl_label = "Remove All Smart Bevel"
+    bl_description = "Removes Smart Bevel modifiers from selected objects."
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        for obj in context.selected_objects:
+            context.view_layer.objects.active = obj
+            if 'Smart Bevel' in obj.modifiers.keys():
+                obj.modifiers.remove(bpy.context.object.modifiers["Smart Bevel"])
+        return {'FINISHED'}
+
+
 def menu_func(self, context):
     self.layout.operator(AddSmartBevel.bl_idname)
 
-classes = (Smart_Bevel_PT_panel, InitSmartBevel, PropagateSmartBevel, AddSmartBevel)
+classes = (Smart_Bevel_PT_panel, InitSmartBevel, PropagateSmartBevel, AddSmartBevel, RemoveSmartBevels)
 # cls = SmartBevelPanel
 
 def register():
